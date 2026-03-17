@@ -1,24 +1,35 @@
-# README
+# Zoo Manager (Rails 8)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A lightweight zoo management system featuring dynamic animal filtering, method chaining, and full localization support (UA/EN).
 
-Things you may want to cover:
+## Quick Start Guide
 
-* Ruby version
+### 1. Prerequisites
+Ensure you have the following installed:
+* **Ruby 3.3+**
+* **Rails 8.0+**
+* **SQLite3**
 
-* System dependencies
+### 2. Installation
+Clone the repository and install dependencies:
+```bash
+git clone <your-repository-url>
+cd zoo_manager
+bundle install
+```
 
-* Configuration
+### 3. Database Setup
+Create the database, run migrations, and load the initial animal data:
 
-* Database creation
+```bash
+bin/rails db:prepare
+```
 
-* Database initialization
+### 4. Running the App
+Start the server along with Tailwind CSS processing:
 
-* How to run the test suite
+```bash
+bin/dev
+```
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Access the application at: http://localhost:3000/animals
