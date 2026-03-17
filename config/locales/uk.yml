@@ -1,0 +1,34 @@
+uk:
+  # Плюралізація віку
+  date:
+    age:
+      one: "%{count} рік"
+      few: "%{count} роки"
+      many: "%{count} років"
+      other: "%{count} років"
+
+  # Переклади для фільтрів та таблиці
+  animals:
+    index:
+      title: "Управління зоопарком"
+      filters:
+        species: "Вид"
+        all_species: "Всі види"
+        max_age: "Макс. вік"
+        age_placeholder: "Напр. 5"
+        sex: "Стать"
+        all_sex: "Всі"
+        search: "Пошук"
+        reset: "Скинути"
+      table:
+        species: "Вид"
+        age: "Вік"
+        sex: "Стать"
+      sex_types:
+        male: "Самець"
+        female: "Самка"
+
+  species_names:
+    monkey: "Мавпа"
+    squirrel: "Білка"
+    lion: "Лев"
