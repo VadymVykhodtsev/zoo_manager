@@ -1,28 +1,39 @@
 <div class="container mx-auto p-8">
+  <h1 class="text-2xl font-bold mb-6"><%= t('animals.index.title') %></h1>
+
   <%= form_with url: animals_path, method: :get, class: "bg-gray-50 p-6 rounded-xl mb-8 flex flex-wrap gap-4 items-end border border-gray-200" do |f| %>
 
     <div class="flex flex-col">
-      <label class="text-xs font-semibold uppercase text-gray-500 mb-1">Вид</label>
-      <%= f.select :species, Animal.pluck(:species).uniq,
-                   { include_blank: "Всі види", selected: params[:species] },
+      <label class="text-xs font-semibold uppercase text-gray-500 mb-1">
+        <%= t('animals.index.filters.species') %>
+      </label>
+      <%= f.select :species,
+                   Animal.pluck(:species).uniq.map { |s| [t("species_names.#{s}", default: s.capitalize), s] },
+                   { include_blank: t('animals.index.filters.all_species'), selected: params[:species] },
                    class: "rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" %>
     </div>
 
     <div class="flex flex-col">
-      <label class="text-xs font-semibold uppercase text-gray-500 mb-1">Макс. вік</label>
-      <%= f.number_field :age_limit, value: params[:age_limit], placeholder: "Напр. 5",
+      <label class="text-xs font-semibold uppercase text-gray-500 mb-1">
+        <%= t('animals.index.filters.max_age') %>
+      </label>
+      <%= f.number_field :age_limit, value: params[:age_limit],
+                         placeholder: t('animals.index.filters.age_placeholder'),
                          class: "rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" %>
     </div>
 
     <div class="flex flex-col">
-      <label class="text-xs font-semibold uppercase text-gray-500 mb-1">Стать</label>
-      <%= f.select :sex, [%w[Самець male], %w[Самка female]],
-                   { include_blank: "Всі", selected: params[:sex] },
+      <label class="text-xs font-semibold uppercase text-gray-500 mb-1">
+        <%= t('animals.index.filters.sex') %>
+      </label>
+      <%= f.select :sex,
+                   [[t('animals.index.sex_types.male'), 'male'], [t('animals.index.sex_types.female'), 'female']],
+                   { include_blank: t('animals.index.filters.all_sex'), selected: params[:sex] },
                    class: "rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" %>
     </div>
 
-    <%= f.submit "Пошук", class: "bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 cursor-pointer transition font-medium" %>
-    <%= link_to "Скинути", animals_path, class: "bg-gray-200 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-300 transition font-medium" %>
+    <%= f.submit t('animals.index.filters.search'), class: "bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 cursor-pointer transition font-medium" %>
+    <%= link_to t('animals.index.filters.reset'), animals_path, class: "bg-gray-200 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-300 transition font-medium" %>
 
   <% end %>
 
@@ -30,19 +41,23 @@
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">
       <tr>
-        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Вид</th>
-        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Вік</th>
-        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Стать</th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t('animals.index.table.species') %></th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t('animals.index.table.age') %></th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t('animals.index.table.sex') %></th>
       </tr>
       </thead>
       <tbody class="divide-y divide-gray-200">
       <% @animals.each do |animal| %>
         <tr class="hover:bg-indigo-50 transition">
-          <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900"><%= animal.species.capitalize %></td>
-          <td class="px-6 py-4 whitespace-nowrap text-gray-600"><%= animal.age %> років</td>
+          <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+            <%= t("species_names.#{animal.species}", default: animal.species.capitalize) %>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-gray-600">
+            <%= t('date.age', count: animal.age) %>
+          </td>
           <td class="px-6 py-4 whitespace-nowrap">
               <span class="px-2 py-1 text-xs font-semibold rounded-full <%= animal.sex == 'male' ? 'bg-blue-100 text-blue-800' : 'bg-pink-100 text-pink-800' %>">
-                <%= animal.sex %>
+                <%= t("animals.index.sex_types.#{animal.sex}") %>
               </span>
           </td>
         </tr>
